@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ```ruby
  ActiveJob::Stats.configure do |config|
-      config.logger = ActiveJob::Stats::StatsdAdapter
+      config.logger = ActiveJob::Stats::StatsdAdapter.new
  end
 ```
 
