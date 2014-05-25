@@ -1,8 +1,8 @@
 module ActiveJob
   module Stats
     module Options
-      attr_reader(:monitored) { true }
-      attr_reader(:benchmarked) { false }
+      attr_reader(:monitored)
+      attr_reader(:benchmarked)
 
       def benchmark(benchmarked=true)
         @benchmarked = benchmarked
