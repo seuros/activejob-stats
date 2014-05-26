@@ -6,38 +6,38 @@ require 'jobs/benchmarked_job'
 class StatsCallbacksTest < ActiveSupport::TestCase
   def setup
     ActiveJob::Stats.configure do |config|
-      config.logger = TestAdapter.new
+      config.reporter = TestAdapter.new
     end
-    @logger = ActiveJob::Stats.logger
+    @reporter = ActiveJob::Stats.reporter
   end
 
   def test_callbacks
     job = MonitoredJob.new
-    @logger.reset
+    @reporter.reset
     20.times { job.execute }
-    assert_equal 20, @logger.count['total.started']
-    assert_equal 20, @logger.count['total.finished']
-    assert_equal 20, @logger.count['active_jobs.started']
-    assert_equal 20, @logger.count['active_jobs.finished']
-    assert_equal 20, @logger.count["#{job}.started"]
-    assert_equal 20, @logger.count["#{job}.finished"]
-    assert_equal Hash.new, @logger.benchmark
+    assert_equal 20, @reporter.count['total.started']
+    assert_equal 20, @reporter.count['total.finished']
+    assert_equal 20, @reporter.count['active_jobs.started']
+    assert_equal 20, @reporter.count['active_jobs.finished']
+    assert_equal 20, @reporter.count["#{job}.started"]
+    assert_equal 20, @reporter.count["#{job}.finished"]
+    assert_equal Hash.new, @reporter.benchmark
   end
 
   def test_callbacks_unmonitored
     job = UnMonitoredJob.new
-    @logger.reset
+    @reporter.reset
     20.times { job.execute }
-    assert_equal Hash.new, @logger.count
-    assert_equal Hash.new, @logger.benchmark
+    assert_equal Hash.new, @reporter.count
+    assert_equal Hash.new, @reporter.benchmark
   end
 
   def test_callbacks_benchmark
     job = BenchmarkedJob.new
-    @logger.reset
+    @reporter.reset
     job.execute
-    assert @logger.benchmark['active_jobs.processed']
-    assert @logger.benchmark['BenchmarkedJob.processed']
+    assert @reporter.benchmark['active_jobs.processed']
+    assert @reporter.benchmark['BenchmarkedJob.processed']
   end
 
 end

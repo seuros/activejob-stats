@@ -5,7 +5,7 @@ module ActiveJob
       #
       # @param [String] stat stat name
       def increment(stat)
-        ActiveJob::Base.logger.info(stat)
+        ActiveJob::Base.reporter.info(stat)
       end
 
       # Sends a timing (in ms) for the given stat to the stats server. The
@@ -14,7 +14,7 @@ module ActiveJob
       # timing for the stat.
       # @param [String] stat stat name
       def timing(stat, ms)
-        ActiveJob::Base.logger.info("Performed job #{stat} in #{ms} ms")
+        ActiveJob::Base.reporter.info("Performed job #{stat} in #{ms} ms")
       end
     end
   end

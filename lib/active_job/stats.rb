@@ -16,14 +16,14 @@ module ActiveJob
     autoload :StatsdAdapter
 
     mattr_accessor(:configuration) { Configuration.new }
-    mattr_writer(:logger)
+    mattr_writer(:reporter)
 
     def self.configure
       yield(configuration)
     end
 
-    def self.logger
-      configuration.logger
+    def self.reporter
+      configuration.reporter
     end
   end
 

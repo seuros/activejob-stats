@@ -7,11 +7,11 @@ class ConfigurationTest < ActiveSupport::TestCase
   def setup
     @adapter = TestAdapter.new
     ActiveJob::Stats.configure do |config|
-      config.logger = @adapter
+      config.reporter = @adapter
     end
   end
 
   def test_adapter
-    assert_equal @adapter, ActiveJob::Stats.logger
+    assert_equal @adapter, ActiveJob::Stats.reporter
   end
 end

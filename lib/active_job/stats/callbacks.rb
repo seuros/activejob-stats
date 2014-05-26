@@ -15,26 +15,26 @@ module ActiveJob
         def benchmark_stats
           require 'active_support/core_ext/benchmark'
           benchmark = Benchmark.ms { yield }
-          ActiveJob::Stats.logger.timing("#{self.class.queue_name}.processed", benchmark)
-          ActiveJob::Stats.logger.timing("#{self.class}.processed", benchmark)
+          ActiveJob::Stats.reporter.timing("#{self.class.queue_name}.processed", benchmark)
+          ActiveJob::Stats.reporter.timing("#{self.class}.processed", benchmark)
         end
 
         def before_perform_stats
-          ActiveJob::Stats.logger.increment("#{self.class.queue_name}.started")
-          ActiveJob::Stats.logger.increment("#{self.class}.started")
-          ActiveJob::Stats.logger.increment('total.started')
+          ActiveJob::Stats.reporter.increment("#{self.class.queue_name}.started")
+          ActiveJob::Stats.reporter.increment("#{self.class}.started")
+          ActiveJob::Stats.reporter.increment('total.started')
         end
 
         def after_enqueue_stats
-          ActiveJob::Stats.logger.increment("#{self.class.queue_name}.enqueued")
-          ActiveJob::Stats.logger.increment("#{self.class}.enqueued")
-          ActiveJob::Stats.logger.increment('total.enqueued')
+          ActiveJob::Stats.reporter.increment("#{self.class.queue_name}.enqueued")
+          ActiveJob::Stats.reporter.increment("#{self.class}.enqueued")
+          ActiveJob::Stats.reporter.increment('total.enqueued')
         end
 
         def after_perform_stats
-          ActiveJob::Stats.logger.increment("#{self.class.queue_name}.finished")
-          ActiveJob::Stats.logger.increment("#{self.class}.finished")
-          ActiveJob::Stats.logger.increment('total.finished')
+          ActiveJob::Stats.reporter.increment("#{self.class.queue_name}.finished")
+          ActiveJob::Stats.reporter.increment("#{self.class}.finished")
+          ActiveJob::Stats.reporter.increment('total.finished')
         end
 
         delegate :benchmarked, :monitored, to: :class

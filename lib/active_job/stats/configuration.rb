@@ -1,7 +1,7 @@
 module ActiveJob
   module Stats
     class Configuration
-      attr_accessor(:logger) { AbstractAdapter.new }
+      attr_accessor(:reporter) { AbstractAdapter.new }
     end
   end
 end
