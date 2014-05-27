@@ -1,6 +1,6 @@
 # Activejob::Stats
 
-Activejob Stats is an Activejob addon that will collect and send data samples from your Jobs to various stat servers
+Activejob Stats is an [ActiveJob](https://github.com/rails/activejob) addon that will collect and send data samples from your Jobs to various stat servers
 
 ## Installation
 
