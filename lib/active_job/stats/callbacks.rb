@@ -3,7 +3,6 @@ module ActiveJob
     module Callbacks
       extend ActiveSupport::Concern
       included do
-        before_enqueue :after_enqueue_stats,  if: :monitored
         after_enqueue  :after_enqueue_stats,  if: :monitored
         before_perform :before_perform_stats, if: :monitored
         after_perform  :after_perform_stats,  if: :monitored
