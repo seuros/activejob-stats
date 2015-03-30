@@ -1,15 +1,15 @@
 module ActiveJob
   module Stats
     module Options
-      attr_reader(:monitored)
-      attr_reader(:benchmarked)
+      cattr_reader(:monitored)
+      cattr_reader(:benchmarked)
 
       def benchmark(benchmarked=true)
-        @benchmarked = benchmarked
+        @@benchmarked = benchmarked
       end
 
       def monitor(monitored=true)
-        @monitored = monitored
+        @@monitored = monitored
       end
 
     end
