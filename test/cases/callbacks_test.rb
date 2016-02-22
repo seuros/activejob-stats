@@ -21,6 +21,8 @@ class StatsCallbacksTest < ActiveSupport::TestCase
     assert_equal 20, @reporter.count["#{job.class}.finished"]
     assert_equal 20, @reporter.count["#{job.queue_name}.started"]
     assert_equal 20, @reporter.count["#{job.queue_name}.finished"]
+    assert_equal 20, @reporter.count["#{job.class}.#{ENV['RAILS_ENV']}.started"]
+    assert_equal 20, @reporter.count["#{job.class}.#{ENV['RAILS_ENV']}.finished"]
   end
 
   def test_callbacks_unmonitored
