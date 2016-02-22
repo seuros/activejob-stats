@@ -14,20 +14,20 @@ class StatsCallbacksTest < ActiveSupport::TestCase
   def test_callbacks
     job = MonitoredJob.new
     @reporter.reset
-    20.times { job.execute }
+    20.times { job.enqueue }
     assert_equal 20, @reporter.count['total.started']
     assert_equal 20, @reporter.count['total.finished']
-    assert_equal 20, @reporter.count['active_jobs.started']
-    assert_equal 20, @reporter.count['active_jobs.finished']
-    assert_equal 20, @reporter.count["#{job}.started"]
-    assert_equal 20, @reporter.count["#{job}.finished"]
+    assert_equal 20, @reporter.count["#{job.class}.started"]
+    assert_equal 20, @reporter.count["#{job.class}.finished"]
+    assert_equal 20, @reporter.count["#{job.queue_name}.started"]
+    assert_equal 20, @reporter.count["#{job.queue_name}.finished"]
     assert_equal Hash.new, @reporter.benchmark
   end
 
   def test_callbacks_unmonitored
     job = UnMonitoredJob.new
     @reporter.reset
-    20.times { job.execute }
+    20.times { job.enqueue }
     assert_equal Hash.new, @reporter.count
     assert_equal Hash.new, @reporter.benchmark
   end
@@ -35,8 +35,8 @@ class StatsCallbacksTest < ActiveSupport::TestCase
   def test_callbacks_benchmark
     job = BenchmarkedJob.new
     @reporter.reset
-    job.execute
-    assert @reporter.benchmark['active_jobs.processed']
+    job.enqueue
+    assert @reporter.benchmark["#{job.class}.processed"]
     assert @reporter.benchmark['BenchmarkedJob.processed']
   end
 
